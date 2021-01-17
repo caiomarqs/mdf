@@ -23,7 +23,7 @@ class UserRepository {
 
     }
 
-    async getUserByEmail(email: string): Promise<any> {
+    async getUserByEmail(email: string): Promise<null | User> {
         const collection = await Mongo.getCollection('user');
 
         const userDb = await collection.findOne({

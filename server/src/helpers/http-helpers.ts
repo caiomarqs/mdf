@@ -1,5 +1,7 @@
 import { IHttpResponse } from '../interfaces';
 
+import { UnauthorizedError, ServerError, NotFoundError } from './errors'
+
 enum HTTP_CODE {
     OK = 200,
     CREATED = 201,
@@ -17,25 +19,42 @@ enum HTTP_CODE {
     BAD_GATEWAY = 502
 }
 
+const ok = (data: any): IHttpResponse => ({
+    statusCode: HTTP_CODE.FORBIDDEN,
+    body: data
+})
 
+const noContent = (): IHttpResponse => ({
+    statusCode: HTTP_CODE.NO_CONTENT,
+    body: null
+})
 
-const badRequest = (error: Error): IHttpResponse => {
-    return {
-        statusCode: HTTP_CODE.BAD_REQUEST,
-        body: error
-    }
-}
+const badRequest = (error: Error): IHttpResponse => ({
+    statusCode: HTTP_CODE.BAD_REQUEST,
+    body: error
+})
 
-const ok = (data: any): IHttpResponse => {
-    return {
-        statusCode: HTTP_CODE.FORBIDDEN,
-        body: data
-    }
-}
+const unauthorized = (): IHttpResponse => ({
+    statusCode: HTTP_CODE.UNAUTHORIZED,
+    body: new UnauthorizedError()
+})
 
-const unauthorized = (): IHttpResponse => {
-    return {
-        statusCode: HTTP_CODE.UNAUTHORIZED,
-        body: new Error('Unauthorized')
-    }
+const notFound = (): IHttpResponse => ({
+    statusCode: HTTP_CODE.NOT_FOUND,
+    body: new NotFoundError()
+})
+
+const serverError = (error: Error): IHttpResponse => ({
+    statusCode: HTTP_CODE.INTERNAL_SERVER_ERROR,
+    body: new ServerError(error.stack)
+})
+
+export {
+    HTTP_CODE,
+    badRequest,
+    ok,
+    unauthorized,
+    serverError,
+    notFound,
+    noContent
 }

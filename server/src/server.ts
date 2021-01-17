@@ -1,8 +1,6 @@
-import { AddressInfo } from 'net';
+import { Mongo } from './db';
 
-import { Mongo } from './db'
-
-const uri = "mongodb+srv://mduser:mduser@cluster0.jzno0.mongodb.net/<dbname>?retryWrites=true&w=majority"
+const uri = "mongodb+srv://backend:backend@cluster0.jzno0.mongodb.net/Cluster0?retryWrites=true&w=majority"
 
 Mongo
     .connect(uri)
