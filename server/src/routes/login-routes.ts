@@ -5,7 +5,10 @@ import { routerAdapter } from '../adapters';
 
 const loginRoutes = (router: Router) => {
 
-    router.get('/login', routerAdapter);
+    router.get(
+        '/login',
+        async (req, res) => routerAdapter(req, res, new LoginController())
+    );
 
 }
 

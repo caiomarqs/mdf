@@ -1,20 +1,35 @@
-import { IHttpResponse } from '../interfaces'
-import { } from './errors'
-import { HTTP_CODE } from './http-helpers'
+import { requiredFieldsError } from "./http-helpers";
 
-const requiredFieldsValidation = (obj: {}, fileds: string[] | string): IHttpResponse => {
-    const reqFields = Object.keys(obj);
+const requiredFieldsValidation = (data: {}, fileds: string[]): [string[], boolean] => {
 
-    if (reqFields.length === 0) {
-        return {
-            statusCode: HTTP_CODE.BAD_REQUEST,
-            body: new Error("")
-        }
+    const dataFields = Object.keys(data);
+
+    const requiredFields =
+        fileds.filter(field => dataFields.indexOf(field) < 0);
+
+    if (requiredFields.length > 0) {
+        return [requiredFields, true]
     }
 
-    return {
-        statusCode: HTTP_CODE.BAD_REQUEST,
-        body: new Error("")
+    return [[], false];
+}
+
+const emptyFieldsValidation = (data: {}): [string[], boolean] => {
+
+    const filtringFields = Object.entries(data).filter(([_, val]) => {
+        return val === ""
+    });
+
+    const emptyFields = filtringFields.map(([key]) => key);
+
+    if (emptyFields.length > 0) {
+        return [emptyFields as string[], true]
     }
 
+    return [[], false];
+}
+
+export {
+    requiredFieldsValidation,
+    emptyFieldsValidation
 }

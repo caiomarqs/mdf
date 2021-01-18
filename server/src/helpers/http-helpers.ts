@@ -1,6 +1,12 @@
 import { IHttpResponse } from '../interfaces';
 
-import { UnauthorizedError, ServerError, NotFoundError } from './errors'
+import {
+    UnauthorizedError,
+    ServerError,
+    NotFoundError,
+    RequiredFieldsError,
+    EmptyFieldsError
+} from './errors'
 
 enum HTTP_CODE {
     OK = 200,
@@ -49,6 +55,34 @@ const serverError = (error: Error): IHttpResponse => ({
     body: new ServerError(error.stack)
 })
 
+const requiredFieldsError = (fields: string[]): IHttpResponse => {
+
+    const error = new RequiredFieldsError();
+
+    return {
+        statusCode: HTTP_CODE.BAD_REQUEST,
+        body: {
+            name: error.name,
+            message: error.message,
+            fields
+        }
+    }
+}
+
+const emptyFieldsError = (fields: string[]): IHttpResponse => {
+    const error = new EmptyFieldsError();
+
+    return {
+        statusCode: HTTP_CODE.BAD_REQUEST,
+        body: {
+            name: error.name,
+            message: error.message,
+            fields
+        }
+    }
+
+}
+
 export {
     HTTP_CODE,
     badRequest,
@@ -56,5 +90,7 @@ export {
     unauthorized,
     serverError,
     notFound,
-    noContent
+    noContent,
+    requiredFieldsError,
+    emptyFieldsError
 }

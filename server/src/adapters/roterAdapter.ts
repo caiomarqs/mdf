@@ -3,40 +3,31 @@ import { Request, Response } from "express";
 import { IController } from "../interfaces";
 import { HTTP_CODE } from "../helpers";
 
-const routerAdapter = async (req: Request, res: Response) => {
+const routerAdapter = async (req: Request, res: Response, controller: IController) => {
+    const request = {
+        ...(req.body || {}),
+        ...(req.params || {})
+    }
 
-    res.send(req.body);
+    const httpResponse = await controller.handle(request);
 
-    // if (typeof req.body === undefined) {
-    //     res
-    //         .status(HTTP_CODE.INTERNAL_SERVER_ERROR)
-    //         .json({ error: 'Internal Sever Error' });
-    // }
+    const isSucessStatusCode =
+        httpResponse.statusCode >= HTTP_CODE.OK
+        &&
+        httpResponse.statusCode <= HTTP_CODE.NO_CONTENT
 
-    // const request = {
-    //     ...(req.body || {}),
-    //     ...(req.params || {})
-    // }
-
-    // const httpResponse = await controller.handle(request);
-
-    // const isSucessStatusCode =
-    //     httpResponse.statusCode >= HTTP_CODE.OK
-    //     &&
-    //     httpResponse.statusCode <= HTTP_CODE.NO_CONTENT
-
-    // if (isSucessStatusCode) {
-    //     res
-    //         .status(httpResponse.statusCode)
-    //         .json(httpResponse.body);
-    // }
-    // else {
-    //     res
-    //         .status(httpResponse.statusCode)
-    //         .json({
-    //             error: httpResponse.body.message
-    //         })
-    // }
+    if (isSucessStatusCode) {
+        res
+            .status(httpResponse.statusCode)
+            .json(httpResponse.body);
+    }
+    else {
+        res
+            .status(httpResponse.statusCode)
+            .json({
+                error: { ...httpResponse.body }
+            })
+    }
 }
 
 export { routerAdapter }
