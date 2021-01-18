@@ -5,7 +5,7 @@ import { routerAdapter } from '../adapters';
 
 const loginRoutes = (router: Router) => {
 
-    router.get('/login', routerAdapter(new LoginController()));
+    router.get('/login', routerAdapter);
 
 }
 
