@@ -1,16 +1,28 @@
+import { config } from 'dotenv';
+
 import { Mongo } from './db';
 
-const uri = "mongodb+srv://backend:backend@cluster0.jzno0.mongodb.net/Cluster0?retryWrites=true&w=majority"
-
-Mongo
-    .connect(uri)
-    .then(async() => {
-        const { app } = (await import('./config/app'));
-
-        app.listen(5000, () => {
-            console.log('Server on localhost:5000')
-        })
+const nodeEnv = process.env.NODE_ENV;
+if ((nodeEnv != 'prod' && nodeEnv != 'test') || nodeEnv === undefined) {
+    config({
+        path: process.cwd() + '/.env.dev'
     })
-    .catch(() => {
-        console.log("Não foi possivel se conectar ao banco!");
-    });
+}
+
+const createServer = async () => {
+    const { app } = (await import('./config/app'));
+    app.listen(5000, () => {
+        console.log('Server on localhost:5000')
+    })
+}
+
+const createConnection = () => {
+    return Mongo
+        .connect(process.env.MONGO_URI as string)
+        .then(async () => await createServer())
+        .catch((err) => new Error("Não foi possivel se conectar ao banco!"));
+}
+
+createConnection();
+
+export { createServer, createConnection }
