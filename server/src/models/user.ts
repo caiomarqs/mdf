@@ -11,7 +11,12 @@ class User {
     email: string | null;
     password: string | null;
 
-    constructor(name: string, email: string, password: string | null = null, id = '0') {
+    constructor(
+        name: string,
+        email: string,
+        password: string | null = null,
+        id: string | null = null
+    ) {
         this.id = id;
         this.name = name;
         this.email = email;

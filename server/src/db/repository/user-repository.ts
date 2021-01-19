@@ -53,14 +53,12 @@ class UserRepository {
         return userDb.password === password;
     }
 
-    async insertUser(name: string, email: string, password: string): Promise<string> {
+    async insertUser(user: User): Promise<string> {
 
         const collection = await Mongo.getCollection('user');
 
         try {
-            const insertUser =
-                await collection.insertOne({ name, email, password });
-
+            const insertUser = await collection.insertOne(user);
             return insertUser.insertedId;
         }
         catch {

@@ -1,6 +1,11 @@
-import { requiredFieldsError } from "./http-helpers";
+type RulesType = {
+    field: string,
+    rule: RegExp
+}
 
-const requiredFieldsValidation = (data: {}, fileds: string[]): [string[], boolean] => {
+type ValidationType = [string[], boolean];
+
+const requiredFieldsValidation = (data: {}, fileds: string[]): ValidationType => {
 
     const dataFields = Object.keys(data);
 
@@ -14,7 +19,7 @@ const requiredFieldsValidation = (data: {}, fileds: string[]): [string[], boolea
     return [[], false];
 }
 
-const emptyFieldsValidation = (data: {}): [string[], boolean] => {
+const emptyFieldsValidation = (data: {}): ValidationType => {
 
     const filtringFields = Object.entries(data).filter(([_, val]) => {
         return val === ""
@@ -29,7 +34,26 @@ const emptyFieldsValidation = (data: {}): [string[], boolean] => {
     return [[], false];
 }
 
+const invalidFieldsValidation = (data: {}, rules: RulesType[]): ValidationType => {
+
+    const filtringFields = Object.entries(data).filter(([key, val], i) => {
+        if (rules[i].field == key) {
+            const value = (val as string).trim().replace(/ /, "");
+            return !rules[i].rule.test(value);
+        }
+    });
+
+    const invalidFields = filtringFields.map(([key]) => key);
+
+    if (invalidFields.length > 0) {
+        return [invalidFields as string[], true]
+    }
+
+    return [[], false];
+}
+
 export {
     requiredFieldsValidation,
-    emptyFieldsValidation
+    emptyFieldsValidation,
+    invalidFieldsValidation
 }

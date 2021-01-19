@@ -5,7 +5,8 @@ import {
     ServerError,
     NotFoundError,
     RequiredFieldsError,
-    EmptyFieldsError
+    EmptyFieldsError,
+    InvalidFieldsError
 } from './errors'
 
 enum HTTP_CODE {
@@ -28,6 +29,11 @@ enum HTTP_CODE {
 const ok = (data: any): IHttpResponse => ({
     statusCode: HTTP_CODE.FORBIDDEN,
     body: data
+})
+
+const created = (resourseId: string): IHttpResponse => ({
+    statusCode: HTTP_CODE.CREATED,
+    body: { id: resourseId }
 })
 
 const noContent = (): IHttpResponse => ({
@@ -83,14 +89,29 @@ const emptyFieldsError = (fields: string[]): IHttpResponse => {
 
 }
 
+const invalidFieldsError = (fields: string[]): IHttpResponse => {
+    const error = new InvalidFieldsError(fields);
+
+    return {
+        statusCode: HTTP_CODE.BAD_REQUEST,
+        body: {
+            name: error.name,
+            message: error.message,
+            fields
+        }
+    }
+}
+
 export {
     HTTP_CODE,
     badRequest,
     ok,
+    created,
     unauthorized,
     serverError,
     notFound,
     noContent,
     requiredFieldsError,
-    emptyFieldsError
+    emptyFieldsError,
+    invalidFieldsError
 }
