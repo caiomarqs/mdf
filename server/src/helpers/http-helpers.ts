@@ -43,7 +43,10 @@ const noContent = (): IHttpResponse => ({
 
 const badRequest = (error: Error): IHttpResponse => ({
     statusCode: HTTP_CODE.BAD_REQUEST,
-    body: error
+    body: { 
+        name: error.name, 
+        message: error.message 
+    }
 })
 
 const unauthorized = (): IHttpResponse => ({

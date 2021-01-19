@@ -4,12 +4,14 @@ import { User } from '../models';
 import { IController, IHttpResponse } from '../interfaces'
 import { UserRepository } from '../db';
 import { regexRules } from '../utils';
+import { BadRequestError } from '../helpers';
 import {
     requiredFieldsError,
     emptyFieldsError,
     created,
     serverError,
-    invalidFieldsError
+    invalidFieldsError,
+    badRequest
 } from '../helpers/http-helpers'
 import {
     requiredFieldsValidation,
@@ -17,24 +19,36 @@ import {
     invalidFieldsValidation
 } from '../helpers/validation-helpers';
 
+
 class RegisterControler implements IController {
 
     repository = new UserRepository();
 
     async handle(req: any): Promise<IHttpResponse> {
-
-        const validations = await this.validations(req);
-
-        if (validations) {
-            return validations;
-        }
-
-        const { nome, email, password } = req
-        const user = new User(nome, email, bcrypt.hashSync(password, 10));
-
         try {
+        
+            const validations = await this.validations(req);
+
+            if (validations) {
+                return validations;
+            }
+
+            const { nome, email, password } = req
+
+            const findUser = await this.repository.getUserByEmail(email as string);
+
+            if (findUser?.email) {
+                const error = new BadRequestError(
+                    "UserRegistred",
+                    "User has been register!"
+                )    
+                return badRequest(error);
+            }
+    
+            const user = new User(nome, email, bcrypt.hashSync(password, 10));
             const userInserted = await this.repository.insertUser(user);
             return created(userInserted);
+
         } catch (err) {
             return serverError(err);
         }
