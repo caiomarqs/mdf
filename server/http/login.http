@@ -1,0 +1,7 @@
+GET http://localhost:5000/v1/verifyUser
+content-type: application/json
+
+{
+    "email" : "caio3@gmail.com",
+    "password": "123456Sc@"
+}
