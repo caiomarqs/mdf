@@ -1,3 +1,5 @@
+import bcrypt from 'bcrypt';
+
 import { Mongo } from '../mongodb';
 import { User } from '../../models';
 
@@ -43,14 +45,19 @@ class UserRepository {
 
     }
 
-    async authUser(email: string, password: string): Promise<boolean> {
+    async verifyUser(email: string, password: string): Promise<boolean[]> {
         const collection = await Mongo.getCollection('user');
 
         const userDb = await collection.findOne({
             'email': email
         });
 
-        return userDb.password === password;
+        const decryptPass = await bcrypt.compare(password, userDb.password)
+
+        return [
+            userDb.email === email,
+            decryptPass
+        ];
     }
 
     async insertUser(user: User): Promise<string> {

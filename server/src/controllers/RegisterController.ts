@@ -26,7 +26,7 @@ class RegisterControler implements IController {
 
     async handle(req: any): Promise<IHttpResponse> {
         try {
-        
+
             const validations = await this.validations(req);
 
             if (validations) {
@@ -41,10 +41,10 @@ class RegisterControler implements IController {
                 const error = new BadRequestError(
                     "UserRegistred",
                     "User has been register!"
-                )    
+                )
                 return badRequest(error);
             }
-    
+
             const user = new User(nome, email, bcrypt.hashSync(password, 10));
             const userInserted = await this.repository.insertUser(user);
             return created(userInserted);

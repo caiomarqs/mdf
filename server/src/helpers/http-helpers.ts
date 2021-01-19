@@ -27,7 +27,7 @@ enum HTTP_CODE {
 }
 
 const ok = (data: any): IHttpResponse => ({
-    statusCode: HTTP_CODE.FORBIDDEN,
+    statusCode: HTTP_CODE.OK,
     body: data
 })
 
@@ -43,9 +43,9 @@ const noContent = (): IHttpResponse => ({
 
 const badRequest = (error: Error): IHttpResponse => ({
     statusCode: HTTP_CODE.BAD_REQUEST,
-    body: { 
-        name: error.name, 
-        message: error.message 
+    body: {
+        name: error.name,
+        message: error.message
     }
 })
 
@@ -105,6 +105,13 @@ const invalidFieldsError = (fields: string[]): IHttpResponse => {
     }
 }
 
+const invalidUserError = (email: boolean, password: boolean): IHttpResponse => {
+    return {
+        statusCode: HTTP_CODE.BAD_REQUEST,
+        body: { email, password }
+    }
+}
+
 export {
     HTTP_CODE,
     badRequest,
@@ -116,5 +123,6 @@ export {
     noContent,
     requiredFieldsError,
     emptyFieldsError,
-    invalidFieldsError
+    invalidFieldsError,
+    invalidUserError
 }

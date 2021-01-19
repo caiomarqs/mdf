@@ -37,7 +37,7 @@ const emptyFieldsValidation = (data: {}): ValidationType => {
 const invalidFieldsValidation = (data: {}, rules: RulesType[]): ValidationType => {
 
     const filtringFields = Object.entries(data).filter(([key, val], i) => {
-        if (rules[i].field == key) {
+        if (rules[i].field === key) {
             const value = (val as string).trim().replace(/ /, "");
             return !rules[i].rule.test(value);
         }

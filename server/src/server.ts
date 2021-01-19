@@ -8,7 +8,7 @@ Mongo
         const { app } = (await import('./config/app'));
 
         app.listen(5000, () => {
-            console.log('Server on : localhost:5000')
+            console.log('Server on localhost:5000')
         })
     })
     .catch(() => {

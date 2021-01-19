@@ -22,11 +22,11 @@ class LoginController implements IController {
     async handle(req: any): Promise<IHttpResponse> {
 
         const validations = await this.validations(req);
-        
+
         if(validations) {
             return validations
         }
-        
+
         const { email, password } = req
 
         try {
@@ -34,7 +34,7 @@ class LoginController implements IController {
                 await this.repository.getUserByEmail(email as string);
 
             if (findUser) {
-                const auth = await this.repository.authUser(
+                const auth = await this.repository.verifyUser(
                     email as string,
                     password as string
                 );
