@@ -2,8 +2,9 @@ import { config } from 'dotenv';
 
 import { Mongo } from './db';
 
-const nodeEnv = process.env.NODE_ENV;
-if ((nodeEnv != 'prod' && nodeEnv != 'test') || nodeEnv === undefined) {
+const NODE_ENV = process.env.NODE_ENV;
+
+if ((NODE_ENV != 'prod' && NODE_ENV != 'test') || NODE_ENV === undefined) {
     config({
         path: process.cwd() + '/.env.dev'
     })
@@ -11,8 +12,9 @@ if ((nodeEnv != 'prod' && nodeEnv != 'test') || nodeEnv === undefined) {
 
 const createServer = async () => {
     const { app } = (await import('./config/app'));
-    app.listen(5000, () => {
-        console.log('Server on localhost:5000')
+
+    app.listen(process.env.PORT, () => {
+        console.log(`Server on : ${process.env.PORT}`)
     })
 }
 
@@ -20,7 +22,7 @@ const createConnection = () => {
     return Mongo
         .connect(process.env.MONGO_URI as string)
         .then(async () => await createServer())
-        .catch((err) => new Error("Não foi possivel se conectar ao banco!"));
+        .catch(() => new Error("Não foi possivel se conectar ao banco!"));
 }
 
 createConnection();

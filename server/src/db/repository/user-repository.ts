@@ -5,7 +5,7 @@ import { User } from '../../models';
 
 class UserRepository {
 
-    async getUserByID(id: string): Promise<any> {
+    async getUserByID(id: string): Promise<User | null> {
         const collection = await Mongo.getCollection('user');
 
         const userDb = await collection.findOne({

@@ -6,7 +6,8 @@ import { HTTP_CODE } from "../helpers";
 const routerAdapter = async (req: Request, res: Response, controller: IController) => {
     const request = {
         ...(req.body || {}),
-        ...(req.params || {})
+        ...(req.params || {}),
+        ...req
     }
 
     const httpResponse = await controller.handle(request);

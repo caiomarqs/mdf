@@ -5,3 +5,13 @@ content-type: application/json
     "email" : "caio3@gmail.com",
     "password": "123456Sc@"
 }
+
+###
+
+GET http://localhost:5000/v1/login
+content-type: application/json
+
+{
+    "email" : "caio@gmail.com",
+    "password": "123456Sc@"
+}
