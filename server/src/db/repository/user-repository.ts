@@ -1,7 +1,9 @@
 import bcrypt from 'bcrypt';
+import { ObjectId } from 'mongodb';
 
 import { Mongo } from '../mongodb';
 import { User } from '../../models';
+
 
 class UserRepository {
 
@@ -9,7 +11,7 @@ class UserRepository {
         const collection = await Mongo.getCollection('user');
 
         const userDb = await collection.findOne({
-            '_id': id
+            '_id': new ObjectId(id)
         });
 
         if (!userDb) {
@@ -65,7 +67,9 @@ class UserRepository {
         const collection = await Mongo.getCollection('user');
 
         try {
-            const insertUser = await collection.insertOne(user);
+            const insertUser =
+                await collection.insertOne(user.getUserWithoutId());
+
             return insertUser.insertedId;
         }
         catch {

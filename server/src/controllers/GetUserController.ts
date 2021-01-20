@@ -23,7 +23,7 @@ class GetUserController implements IController {
         this.userId = userId
     }
 
-    async handle(req: Request): Promise<IHttpResponse> {
+    async handle(req: Request, headers: any): Promise<IHttpResponse> {
 
         const validations = await this.validations(req);
         if (validations) {
@@ -31,7 +31,7 @@ class GetUserController implements IController {
         }
 
 
-        let authorization: string = req.headers.authorization ?? "";
+        let authorization: string = headers.authorization ?? "";
         if (!authorization.trim().includes("Bearer ")) {
             return badRequest(new BadRequestError(
                 "InvalidHeader",

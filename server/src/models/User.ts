@@ -23,6 +23,11 @@ class User {
         this.password = password;
     }
 
+    getUserWithoutId(): any {
+        const { name, email, password } = this
+        return { name, email, password }
+    }
+
 }
 
 export { User, IUser };

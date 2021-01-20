@@ -7,10 +7,12 @@ const routerAdapter = async (req: Request, res: Response, controller: IControlle
     const request = {
         ...(req.body || {}),
         ...(req.params || {}),
-        ...req
+        // ...req
     }
 
-    const httpResponse = await controller.handle(request);
+    const headers = { ...(req.headers || {}) }
+
+    const httpResponse = await controller.handle(request, headers);
 
     const isSucessStatusCode =
         httpResponse.statusCode >= HTTP_CODE.OK
