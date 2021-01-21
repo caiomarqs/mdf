@@ -28,6 +28,11 @@ class User {
         return { name, email, password }
     }
 
+    getUserWithoutPassword(): any {
+        const { id, name, email } = this
+        return { id, name, email }
+    }
+
 }
 
 export { User, IUser };

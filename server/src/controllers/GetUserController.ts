@@ -45,7 +45,7 @@ class GetUserController implements IController {
             const findUser = await this.repositroy.getUserByID(this.userId);
             
             if (findUser) {
-                return ok(findUser);
+                return ok(findUser.getUserWithoutPassword());
             }
 
             return notFound();
