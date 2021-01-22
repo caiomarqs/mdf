@@ -1,0 +1,28 @@
+#login-page{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - 6rem);
+
+    // form
+    .form-container .form-titles p{
+        width: 17.5rem;
+    }
+
+    // link cadastro
+    span {
+        margin-top: 4rem;
+        color: $cinza-600;
+        @include noselect();
+        
+        a {
+            color: $verde;
+            text-decoration: none;
+
+            &:hover{
+                text-decoration: underline;
+            }
+        }
+    }
+}

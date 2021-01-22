@@ -1,0 +1,37 @@
+.primary-btn {
+    box-sizing: border-box;
+    border-radius: 8px;
+    height: 40px;
+    border: none;
+    outline: none;
+
+    span{
+        @include label();
+    }
+
+    &:hover{
+        cursor: pointer;
+        filter: brightness(0.9);
+    }
+}
+
+.primary-btn.verde-btn{
+    border: 1px solid $verde-e;
+    background-color: $verde;
+    transition: .25s ease-in-out;
+
+    span{
+        color: $branco !important;
+    }
+}
+
+
+.primary-btn.amarelo-btn{
+    border: 1px solid $verde-e;
+    background-color: $verde;
+    transition: .25s ease-in-out;
+
+    span{
+        color: $branco !important;
+    }
+}

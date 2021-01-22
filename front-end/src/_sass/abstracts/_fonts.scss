@@ -1,0 +1,49 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@100;300;400;600;700;800&display=swap");
+
+$font-family: "Open Sans", sans-serif;
+
+html {
+    font-family: $font-family;
+}
+
+$h1-font-size: 2.25rem;
+$body1-font-size: 0.875rem;
+$label-font-size: 1rem;
+
+$h1-line-height: 3.0644rem;
+$body1-line-height: 1.1919rem;
+$label-line-height: 1.3619rem;
+
+
+@mixin h1 {
+    font-style: normal;
+    font-weight: 800;
+    font-size: $h1-font-size;
+    line-height: $h1-line-height;
+    color: $cinza-600;
+    font-family: $font-family;
+}
+
+@mixin body1 {
+    font-style: normal;
+    font-weight: normal;
+    font-size: $body1-font-size;
+    line-height: $body1-line-height;
+    font-family: $font-family;
+}
+
+@mixin label {
+    font-style: normal;
+    font-weight: 600;
+    font-size: $label-font-size;
+    line-height: $label-line-height;
+    font-family: $font-family;
+}
+
+h1{
+    @include h1();
+}
+
+p, span, a {
+    @include body1();
+}

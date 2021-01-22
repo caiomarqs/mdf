@@ -1,11 +1,7 @@
 import React from 'react';
 
-const App = () => {
-  return (
-    <div>
-      <h1>OI</h1>
-    </div>
-  )
-}
+import { Routes } from './routes'
+
+const App = () => <Routes />;
 
 export default App;

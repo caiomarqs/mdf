@@ -1,0 +1,23 @@
+{
+  "name": "mdf-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "server/node_modules/.bin/concurrently \"npm run dev:server\" \"npm run dev:front\"",
+    "dev:server": "cd server && npm run dev",
+    "dev:front": "cd front-end && npm start",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/caiomarqs/mdf.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/caiomarqs/mdf/issues"
+  },
+  "homepage": "https://github.com/caiomarqs/mdf#readme"
+}
