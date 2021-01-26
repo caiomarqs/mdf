@@ -5,7 +5,8 @@ import { PrimaryButton } from '../Buttons'
 type FormContainerProps = {
     title: string,
     subtitle?: string,
-    center?: boolean
+    center?: boolean,
+    method?: "GET" | "POST"
 }
 
 const FormContainer: FunctionComponent<FormContainerProps> = (props) => {
@@ -14,7 +15,8 @@ const FormContainer: FunctionComponent<FormContainerProps> = (props) => {
         title,
         subtitle,
         center,
-        children
+        children,
+        method
     } = props;
 
     return (
@@ -27,15 +29,18 @@ const FormContainer: FunctionComponent<FormContainerProps> = (props) => {
                     <p>{subtitle}</p>
                 }
             </div>
-            <div className="inputs-container">
-                {children}
-            </div>
-            <div className={`button-container${center ? " center" : ""}`}>
-                <PrimaryButton
-                    color="verde"
-                    title="Login"
-                />
-            </div>
+            <form method={method} >
+                <div className="inputs-container">
+                    {children}
+                </div>
+                <div className={`button-container${center ? " center" : ""}`}>
+                    <PrimaryButton
+                        color="verde"
+                        title="Login"
+                        width={200}
+                    />
+                </div>
+            </form>
         </div>
     )
 }

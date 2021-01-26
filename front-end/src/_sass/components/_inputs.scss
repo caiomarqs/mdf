@@ -1,0 +1,31 @@
+.text-input-container {
+    height: 78px;
+    width: 100%;
+    max-width: 30rem;
+    margin-bottom: 1.125rem;
+
+    input {
+        height: 3rem;
+        width: 100%;
+        border-radius: 0.5rem;
+        border: solid $cinza-000 1px;
+        outline: none;
+        padding: 0 0.5rem;
+        color: $cinza-600;
+        margin-bottom: 0.5rem;
+        @include label2();
+        @include border-box();
+        @include placeholder-color($cinza-000);
+
+        &:focus {
+            border: solid $cinza-600 1px;
+            color: $cinza-600;
+            transition: 0.25s ease-in-out;
+        }
+    }
+
+    .input-errors span {
+        color: $vermelho !important;
+        @include label2();
+    }
+}

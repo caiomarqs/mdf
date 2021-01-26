@@ -40,6 +40,14 @@ $label-line-height: 1.3619rem;
     font-family: $font-family;
 }
 
+@mixin label2 {
+    font-style: normal;
+    font-weight: 400;
+    font-size: $label-font-size;
+    line-height: $label-line-height;
+    font-family: $font-family;
+}
+
 h1{
     @include h1();
 }

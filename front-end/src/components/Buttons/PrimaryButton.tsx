@@ -21,7 +21,8 @@ const PrimaryButton: FunctionComponent<PrimaryButtonProps> = ({
             id={`${title.toLocaleLowerCase()}-btn`}
             className={`primary-btn ${color}-btn`}
             onClick={onClick}
-            style={{ width: width }}
+            style={{ width: `${width}px` }}
+
         >
             <span>{title}</span>
         </button >
