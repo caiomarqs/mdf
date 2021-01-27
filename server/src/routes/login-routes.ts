@@ -8,12 +8,12 @@ import {
 
 const loginRoutes = (router: Router) => {
 
-    router.get(
+    router.post(
         '/login',
         async (req, res) => routerAdapter(req, res, new LoginController())
     );
 
-    router.get(
+    router.post(
         '/verifyUser',
         async (req, res) => routerAdapter(req, res, new VerifyUserControler())
     );

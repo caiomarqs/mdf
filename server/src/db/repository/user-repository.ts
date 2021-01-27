@@ -54,12 +54,18 @@ class UserRepository {
             'email': email
         });
 
-        const decryptPass = await bcrypt.compare(password, userDb.password)
+        let decryptPass = false;
 
-        return [
-            userDb.email === email,
-            decryptPass
-        ];
+        if (userDb) {
+            decryptPass = await bcrypt.compare(
+                password,
+                userDb.password
+            )
+
+            return [userDb.email === email, decryptPass];
+        }
+
+        return [false, decryptPass];
     }
 
     async insertUser(user: User): Promise<string> {
