@@ -4,7 +4,8 @@ type PrimaryButtonProps = {
     title: string,
     color: "verde" | "amarelo" | "vermelho" | "transparent",
     width?: number,
-    onClick?: () => {} | void
+    onClick?: () => {} | void,
+    disabled?: boolean
 }
 
 const PrimaryButton: FunctionComponent<PrimaryButtonProps> = ({
@@ -12,6 +13,7 @@ const PrimaryButton: FunctionComponent<PrimaryButtonProps> = ({
     onClick = () => { },
     title,
     width = 160,
+    disabled,
     ...props
 }) => {
 
@@ -19,10 +21,10 @@ const PrimaryButton: FunctionComponent<PrimaryButtonProps> = ({
     return (
         <button
             id={`${title.toLocaleLowerCase()}-btn`}
-            className={`primary-btn ${color}-btn`}
+            className={`primary-btn ${color}-btn ${disabled ? 'disabled' : ''}`}
             onClick={onClick}
             style={{ width: `${width}px` }}
-
+            disabled={disabled}
         >
             <span>{title}</span>
         </button >

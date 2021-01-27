@@ -15,6 +15,11 @@
     }
 }
 
+.primary-btn.disabled{
+    filter: brightness(0.8);
+    cursor: initial;
+}
+
 .primary-btn.verde-btn{
     border: 1px solid $verde-e;
     background-color: $verde;

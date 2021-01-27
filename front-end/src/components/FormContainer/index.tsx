@@ -6,7 +6,8 @@ type FormContainerProps = {
     title: string,
     subtitle?: string,
     center?: boolean,
-    butonAction?: () => {} | void
+    butonAction?: () => {} | void,
+    buttonEnable?: boolean
 }
 
 const FormContainer: FunctionComponent<FormContainerProps> = (props) => {
@@ -16,7 +17,8 @@ const FormContainer: FunctionComponent<FormContainerProps> = (props) => {
         subtitle,
         center,
         children,
-        butonAction = () => {}
+        butonAction = () => {},
+        buttonEnable = true
     } = props;
 
     return (
@@ -38,6 +40,7 @@ const FormContainer: FunctionComponent<FormContainerProps> = (props) => {
                     title="Login"
                     width={200}
                     onClick={() => butonAction()}
+                    disabled={buttonEnable}
                 />
             </div>
         </div>

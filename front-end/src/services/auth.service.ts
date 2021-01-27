@@ -3,7 +3,7 @@ import axios from 'axios';
 const verifyUser = async (email: string, password: string) => {
     return axios({
         baseURL: 'http://localhost:5000/v1',
-        method: 'GET',
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },

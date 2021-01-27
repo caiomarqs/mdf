@@ -1,14 +1,17 @@
 import React, { ChangeEvent, useState } from 'react'
 
+import { InputTypes } from './InputTypes'
+
 type TextInputProrps = {
     name: string,
-    type: string,
+    type: InputTypes,
     value?: string,
     placeholder?: string,
     onChange: (e?: ChangeEvent<HTMLInputElement>) => {} | void
     errors?: string[]
     regex?: RegExp
-    defaultErrorMsg?: string
+    defaultErrorMsg?: string,
+    onKeyUp?: () => {} | void
 }
 
 
@@ -20,25 +23,25 @@ const TextInput = ({
     errors = [],
     type,
     regex,
-    defaultErrorMsg = ""
+    defaultErrorMsg = "",
+    onKeyUp = () => {}
 }: TextInputProrps) => {
 
-    const [errorsState, setErrorsState] = useState(errors);
-
-
+    const [inputsErrorsState, setInputsErrorsState] = useState(['']);
+    
     const validation = () => {
-        
-        if (regex && value && !regex.test(value)) {
-            if (errorsState.length === 0) {
-                setErrorsState([defaultErrorMsg])
-            }
 
-            if(value === "") {
-                setErrorsState([])
+
+        if (regex && value && !regex.test(value)) {
+
+            setInputsErrorsState([defaultErrorMsg])
+
+            if (value === "") {
+                setInputsErrorsState([])
             }
         }
-        else{
-            setErrorsState([])
+        else {
+            setInputsErrorsState([])
         }
     }
 
@@ -52,12 +55,18 @@ const TextInput = ({
                 value={value}
                 placeholder={placeholder}
                 onChange={(e) => onChange(e)}
-                onKeyUp={() => validation()}
+                onKeyUp={() => {
+                    onKeyUp();
+                    validation()
+                }}
                 className="text-input"
             />
             <div className="input-errors">
                 {
-                    errorsState.map((error) => <span>{error}</span>)
+                    inputsErrorsState.map((error, i) => <span key={`errro-${name}-${i}`}>{error}</span>)
+                }
+                {
+                    errors.map((error, i) => <span key={`errro-${name}-${i}`}>{error}</span>)
                 }
             </div>
         </div>
