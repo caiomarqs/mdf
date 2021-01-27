@@ -21,6 +21,7 @@
             border: solid $cinza-600 1px;
             color: $cinza-600;
             transition: 0.25s ease-in-out;
+            @include box-shadow(0, 0, 1.25rem, rgba(0, 0, 0, 0.1));
         }
     }
 

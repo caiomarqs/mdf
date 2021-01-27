@@ -1,16 +1,48 @@
-import React from 'react'
+import React, { ChangeEvent, useState } from 'react'
 
 type TextInputProrps = {
     name: string,
     type: string,
     value?: string,
     placeholder?: string,
-    onChange?: () => {},
+    onChange: (e?: ChangeEvent<HTMLInputElement>) => {} | void
     errors?: string[]
+    regex?: RegExp
+    defaultErrorMsg?: string
 }
 
 
-const TextInput = ({ name, value, placeholder, onChange, errors, type }: TextInputProrps) => {
+const TextInput = ({
+    name,
+    value,
+    placeholder,
+    onChange,
+    errors = [],
+    type,
+    regex,
+    defaultErrorMsg = ""
+}: TextInputProrps) => {
+
+    const [errorsState, setErrorsState] = useState(errors);
+
+
+    const validation = () => {
+        
+        if (regex && value && !regex.test(value)) {
+            if (errorsState.length === 0) {
+                setErrorsState([defaultErrorMsg])
+            }
+
+            if(value === "") {
+                setErrorsState([])
+            }
+        }
+        else{
+            setErrorsState([])
+        }
+    }
+
+
     return (
         <div className="text-input-container">
             <input
@@ -19,12 +51,13 @@ const TextInput = ({ name, value, placeholder, onChange, errors, type }: TextInp
                 name={name}
                 value={value}
                 placeholder={placeholder}
-                onChange={onChange}
+                onChange={(e) => onChange(e)}
+                onKeyUp={() => validation()}
                 className="text-input"
             />
             <div className="input-errors">
                 {
-                    errors?.map((error) => <span>error</span>)
+                    errorsState.map((error) => <span>{error}</span>)
                 }
             </div>
         </div>

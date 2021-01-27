@@ -6,7 +6,7 @@ type FormContainerProps = {
     title: string,
     subtitle?: string,
     center?: boolean,
-    method?: "GET" | "POST"
+    butonAction?: () => {} | void
 }
 
 const FormContainer: FunctionComponent<FormContainerProps> = (props) => {
@@ -16,7 +16,7 @@ const FormContainer: FunctionComponent<FormContainerProps> = (props) => {
         subtitle,
         center,
         children,
-        method
+        butonAction = () => {}
     } = props;
 
     return (
@@ -29,18 +29,17 @@ const FormContainer: FunctionComponent<FormContainerProps> = (props) => {
                     <p>{subtitle}</p>
                 }
             </div>
-            <form method={method} >
-                <div className="inputs-container">
-                    {children}
-                </div>
-                <div className={`button-container${center ? " center" : ""}`}>
-                    <PrimaryButton
-                        color="verde"
-                        title="Login"
-                        width={200}
-                    />
-                </div>
-            </form>
+            <div className="inputs-container">
+                {children}
+            </div>
+            <div className={`button-container${center ? " center" : ""}`}>
+                <PrimaryButton
+                    color="verde"
+                    title="Login"
+                    width={200}
+                    onClick={() => butonAction()}
+                />
+            </div>
         </div>
     )
 }

@@ -20,6 +20,10 @@
     background-color: $verde;
     transition: .25s ease-in-out;
 
+    &:focus{
+        @include box-shadow(0, 0, 1rem, rgba(29, 185, 84, 0.8));
+    }
+
     span{
         color: $branco !important;
     }
@@ -27,9 +31,13 @@
 
 
 .primary-btn.amarelo-btn{
-    border: 1px solid $verde-e;
-    background-color: $verde;
+    border: 1px solid $amarelo-e;
+    background-color: $amarelo;
     transition: .25s ease-in-out;
+
+    &:focus{
+        @include box-shadow(0, 0, 1rem, rgba(29, 185, 84, 0.8));
+    }
 
     span{
         color: $branco !important;

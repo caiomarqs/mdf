@@ -4,7 +4,7 @@ type PrimaryButtonProps = {
     title: string,
     color: "verde" | "amarelo" | "vermelho" | "transparent",
     width?: number,
-    onClick?: () => {},
+    onClick?: () => {} | void
 }
 
 const PrimaryButton: FunctionComponent<PrimaryButtonProps> = ({
